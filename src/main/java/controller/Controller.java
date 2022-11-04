@@ -24,78 +24,80 @@ public class Controller {
 		System.out.println(" 1. Login , 2. Register");
 		int choice = sc.nextInt();
 		if (choice == 1) {
-			Integer d;
-			String a;
-			boolean b;
+			Integer accountNumber;
+			String password;
+			Double transferAmount;
+			Integer toAccountNumber;
+			boolean userLoggedIn;
 
 			System.out.println("Enter Account number : ");
-			d = (sc.nextInt());
+			accountNumber = (sc.nextInt());
 			sc.nextLine();
 			System.out.println("Enter User Password : ");
-			a = sc.nextLine();
-			b = ws.login(d, a);
-			System.out.println(b);
+			password = sc.nextLine();
+			userLoggedIn = ws.login(accountNumber, password);
+			System.out.println(userLoggedIn);
 
 			System.out.println("Login Successfully ");
 
-			if (b) {
+			if (userLoggedIn) {
 				System.out.println("1. Add Fund , 2. ShowBalance , 3. FundTransfer ,  4. Withdraw , 5. UnRegister ");
-				int ch = sc.nextInt();
-				if (ch == 1) {
-					Integer dd;
-					Double f;
+				int userChoice = sc.nextInt();
+				if (userChoice == 1) {
+
+					Double addedFund;
 					System.out.println("Enter Account number : ");
-					dd = (sc.nextInt());
+					accountNumber = (sc.nextInt());
 					System.out.println("Enter initial amount : ");
-					f = sc.nextDouble();
-					System.out.println("current Balance after Add Fund:"+ws.addFundsToWallet(dd, f));
+					addedFund = sc.nextDouble();
+					System.out.println("current Balance after Add Fund:"+ws.addFundsToWallet(accountNumber, addedFund));
 
 
-				} else if (ch == 2) {
-					Integer d1;
+				} else if (userChoice == 2) {
+
 
 					System.out.println("Enter Account number : ");
-					d1 = (sc.nextInt());
+					accountNumber = (sc.nextInt());
 
 
-					System.out.println(ws.showWalletBalance(d1));
+					System.out.println(ws.showWalletBalance(accountNumber));
 
 
-				} else if (ch == 3) {
-					Integer ddd;
-					Integer c1;
-					Double f1;
+				} else if (userChoice == 3) {
+
+
+
+
 					System.out.println("Enter From Account number : ");
-					ddd = (sc.nextInt());
+					accountNumber = (sc.nextInt());
 					System.out.println("Enter To Account number : ");
-					c1 = (sc.nextInt());
+					toAccountNumber = (sc.nextInt());
 					System.out.println("Enter Transfer amount : ");
-					f1 = sc.nextDouble();
-					System.out.println("current Balance after Transfer: "+ws.fundTransfer(ddd, c1, f1));
+					transferAmount = sc.nextDouble();
+					System.out.println("current Balance after Transfer: "+ws.fundTransfer(accountNumber, toAccountNumber, transferAmount));
 
 
-				} else if (ch == 4) {
-					Integer ddd3;
-					Double f2;
+				} else if (userChoice == 4) {
+
+
 
 					System.out.println("Enter Account number : ");
-					ddd3 = (sc.nextInt());
+					accountNumber = (sc.nextInt());
 					System.out.println("Enter Amount : ");
-					f2 = sc.nextDouble();
+					 transferAmount= sc.nextDouble();
 
-					System.out.println("current Balance after Withdraw: "+ws.withdraw(ddd3, f2));
+					System.out.println("current Balance after Withdraw: "+ws.withdraw(accountNumber, transferAmount));
 
-				}else if (ch == 5) {
-					Integer dddc;
-					String ad1;
+				}else if (userChoice == 5) {
+
 
 					System.out.println("Enter Account number : ");
-					dddc = (sc.nextInt());
+					accountNumber = (sc.nextInt());
 					sc.nextLine();
 					System.out.println("Enter User Password : ");
-					ad1 = sc.nextLine();
+					password = sc.nextLine();
 
-					System.out.println(ws.unRegisterWallet(dddc, ad1));
+					System.out.println(ws.unRegisterWallet(accountNumber, password));
 
 				}
 

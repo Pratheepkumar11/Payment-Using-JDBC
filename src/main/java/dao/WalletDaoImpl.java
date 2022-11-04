@@ -34,8 +34,8 @@ public class WalletDaoImpl implements WalletDao {
 					pst.setDouble(3, newWallet.getBalance());
 					pst.setString(4, newWallet.getPassword());
 					if (newWallet.getBalance() > 0) {
-						int i = pst.executeUpdate();
-						if (i > 0) {
+						boolean rowUpdated = pst.executeUpdate() > 0;
+						if (rowUpdated) {
 							System.out.println("Account Created Successfully");
 						}
 					} else {
@@ -61,7 +61,7 @@ public class WalletDaoImpl implements WalletDao {
 
 	public Wallet getWalletById(Integer walletId) throws WalletException {
 		// TODO Auto-generated method stub
-		Wallet a = null;
+		Wallet updatedWallet = null;
 		try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/payment","root","");
 			 PreparedStatement pst = con.prepareStatement("SELECT * FROM acc WHERE uid=?")){
 
@@ -70,7 +70,7 @@ public class WalletDaoImpl implements WalletDao {
 			resultSet.next();
 			int check = resultSet.getInt("uid");
 			if (check != 0) {
-				a = new Wallet(resultSet.getInt(1), resultSet.getString(2), resultSet.getDouble(3),resultSet.getString(4));
+				updatedWallet = new Wallet(resultSet.getInt(1), resultSet.getString(2), resultSet.getDouble(3),resultSet.getString(4));
 
 			} else {
 				throw new WalletException(super.toString());
@@ -81,14 +81,14 @@ public class WalletDaoImpl implements WalletDao {
 
 
 
-		return a;
+		return updatedWallet;
 	}
 
 	public Wallet updateWallet(Wallet updateWallet) throws WalletException {
 		// TODO Auto-generated method stub
 
 
-		Wallet b ;
+		Wallet newUpdatedWallet ;
 		try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/payment","root","");
 			 PreparedStatement pst = con.prepareStatement("update acc set ubalance=? where uid=?");
 			 PreparedStatement pstt = con.prepareStatement("SELECT * FROM acc WHERE uid=?"))
@@ -102,16 +102,16 @@ public class WalletDaoImpl implements WalletDao {
 			ResultSet resultSet = pstt.executeQuery();
 			resultSet.next();
 
-			b = new Wallet(resultSet.getInt(1), resultSet.getString(2), resultSet.getDouble(3),resultSet.getString(4));
+			newUpdatedWallet = new Wallet(resultSet.getInt(1), resultSet.getString(2), resultSet.getDouble(3),resultSet.getString(4));
 
 
 		} catch (SQLException ia) {
 			throw new WalletException("Invalid account Number");
 		}
 
-		System.out.println(b);
+		System.out.println(newUpdatedWallet);
 
-		return b;
+		return newUpdatedWallet;
 	}
 
 	public Wallet deleteWalletById(Integer walletID) throws WalletException {
