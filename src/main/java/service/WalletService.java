@@ -5,12 +5,14 @@ import dto.Wallet;
 import exception.AlreadyExistingAccountNumberException;
 import exception.InsufficeintAmountException;
 import exception.WalletException;
+import exception.passwordexp;
 
 public interface WalletService {
 
+
 	Wallet registerWallet(Wallet newWallet) throws WalletException, InsufficeintAmountException, AlreadyExistingAccountNumberException;
 	
-	Boolean login(Integer walletId,String password) throws WalletException, InsufficeintAmountException;
+	Boolean login(Integer walletId,String password) throws WalletException, InsufficeintAmountException, passwordexp;
 
 	Double addFundsToWallet(Integer walletId, Double amount) throws WalletException, InsufficeintAmountException;
 
@@ -18,7 +20,7 @@ public interface WalletService {
 
 	Boolean fundTransfer(Integer fromId, Integer toId, Double amount) throws WalletException, InsufficeintAmountException;
 	
-	Wallet unRegisterWallet(Integer walletId,String password) throws WalletException, InsufficeintAmountException;
+	Wallet unRegisterWallet(Integer walletId,String password) throws WalletException, InsufficeintAmountException, passwordexp;
 
 	Double withdraw(Integer walletId, Double amount) throws WalletException, InsufficeintAmountException;
 }

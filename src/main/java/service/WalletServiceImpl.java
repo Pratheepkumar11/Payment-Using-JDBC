@@ -7,6 +7,7 @@ import dto.Wallet;
 import exception.AlreadyExistingAccountNumberException;
 import exception.InsufficeintAmountException;
 import exception.WalletException;
+import exception.passwordexp;
 
 import java.util.Objects;
 
@@ -21,16 +22,23 @@ public class WalletServiceImpl implements WalletService {
 		
 	}
 
-	public Boolean login(Integer walletId, String password) throws WalletException, InsufficeintAmountException {
+	public Boolean login(Integer walletId, String password) throws WalletException, passwordexp {
 		// TODO Auto-generated method stub
-		boolean success = true;
+		try {
+			boolean success = true;
 
-		Wallet getWallet= walletRepository.getWalletById(walletId);
-		if(Objects.equals(getWallet.getPassword(), password)){
-			return success;
+			Wallet getWallet = walletRepository.getWalletById(walletId);
+			if (Objects.equals(getWallet.getPassword(), password)) {
+				return success;
+			}else {
+				throw new passwordexp(super.toString());
+			}
+		}catch (passwordexp | InsufficeintAmountException ae ){
+			throw new passwordexp("password misMatch");
+
 		}
 
-		return false;
+
 	}
 
 	public Double addFundsToWallet(Integer walletId, Double amount) throws WalletException, InsufficeintAmountException {
@@ -44,7 +52,7 @@ public class WalletServiceImpl implements WalletService {
 		addAmount=currentAmount+amount;
 		currentWallet.setBalance(addAmount);
 
-		System.out.println(currentWallet);
+		//System.out.println(currentWallet);
 		this.walletRepository.updateWallet(currentWallet);
 
 		Wallet updatedWallet = this.walletRepository.getWalletById(walletId);
@@ -92,30 +100,37 @@ public class WalletServiceImpl implements WalletService {
 
 	}
 
-	public Wallet unRegisterWallet(Integer walletId, String password) throws WalletException, InsufficeintAmountException {
+	public Wallet unRegisterWallet(Integer walletId, String password) throws WalletException, InsufficeintAmountException, passwordexp {
 		// TODO Auto-generated method stub
-
+		try {
 		Wallet walletForDeletion =walletRepository.getWalletById(walletId);
 		if(Objects.equals(walletForDeletion.getPassword(), password)){
 			this.walletRepository.deleteWalletById(walletForDeletion.getId());
+			return null ;
+
 		}else {
-			System.out.println("Paasowrd is wrong");
+			throw new passwordexp(super.toString());
+		}
+		}catch (passwordexp | InsufficeintAmountException ae ) {
+			throw new passwordexp("password misMatch");
 		}
 
-		return null ;
+
 	}
 
 	@Override
 	public Double withdraw(Integer walletId, Double amount) throws WalletException, InsufficeintAmountException {
+
+
 		Double currentBalance,updateBalance,finalBalance;
 		Wallet currentWallet = this.walletRepository.getWalletById(walletId);
 
 		currentBalance=currentWallet.getBalance();
-		if(currentBalance>=amount) {
+		if(currentBalance >=  amount) {
 			updateBalance = currentBalance - amount;
 			currentWallet.setBalance(updateBalance);
 
-			System.out.println(currentWallet);
+			//System.out.println(currentWallet);
 			this.walletRepository.updateWallet(currentWallet);
 
 			Wallet d = this.walletRepository.getWalletById(walletId);

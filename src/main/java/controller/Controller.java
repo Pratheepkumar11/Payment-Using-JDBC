@@ -6,6 +6,7 @@ import dto.Wallet;
 import exception.AlreadyExistingAccountNumberException;
 import exception.InsufficeintAmountException;
 import exception.WalletException;
+import exception.passwordexp;
 import service.WalletService;
 import service.WalletServiceImpl;
 
@@ -15,7 +16,7 @@ import java.util.Scanner;
 
 public class Controller {
 
-	public static void main(String[] args) throws WalletException, InsufficeintAmountException {
+	public static void main(String[] args) throws WalletException, InsufficeintAmountException, passwordexp {
 		Scanner sc = new Scanner(System.in);
 
 		WalletService ws = new WalletServiceImpl();

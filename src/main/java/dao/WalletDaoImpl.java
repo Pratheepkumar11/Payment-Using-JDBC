@@ -11,6 +11,7 @@ import exception.AlreadyExistingAccountNumberException;
 
 import exception.InsufficeintAmountException;
 import exception.WalletException;
+import exception.passwordexp;
 
 public class WalletDaoImpl implements WalletDao {
 
@@ -109,7 +110,7 @@ public class WalletDaoImpl implements WalletDao {
 			throw new WalletException("Invalid account Number");
 		}
 
-		System.out.println(newUpdatedWallet);
+		//System.out.println(newUpdatedWallet);
 
 		return newUpdatedWallet;
 	}
