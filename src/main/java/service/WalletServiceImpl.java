@@ -84,10 +84,9 @@ public class WalletServiceImpl implements WalletService {
 
 			senderBalance =- amount;
 			senderWallet.setBalance(senderBalance);
+			this.walletRepository.updateWallet(senderWallet);
 			acceptorBalance = amount + acceptorWallet.getBalance();
 			acceptorWallet.setBalance(acceptorBalance);
-
-			this.walletRepository.updateWallet(senderWallet);
 			this.walletRepository.updateWallet(acceptorWallet);
 			return transferSuccess;
 		}else {

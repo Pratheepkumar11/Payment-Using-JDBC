@@ -132,6 +132,28 @@ class WalletServiceTest {
 
     @Test
     @Order(9)
+    public void test_Register_Exception_When_ZeroBalance() {
+        try{
+            Wallet newWallet = new Wallet(1111, "prathe8", 0.0, "d123");
+            assertThrows(InsufficeintAmountException.class,()-> ws.registerWallet(newWallet));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    @Order(10)
+    public void test_Register_Exception_When_InvalidAccountNumber() {
+        try{
+            Wallet newWallet = new Wallet(-11, "prathe8", 0.0, "d123");
+            assertThrows(WalletException.class,()-> ws.registerWallet(newWallet));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    @Order(11)
     public void test_Login_Exception_MisMatch_Password() {
         try{
 
@@ -142,7 +164,7 @@ class WalletServiceTest {
     }
 
     @Test
-    @Order(10)
+    @Order(12)
     public void test_Login_Exception_MisMatch_userId() {
         try{
 
@@ -153,7 +175,7 @@ class WalletServiceTest {
     }
 
     @Test
-    @Order(11)
+    @Order(13)
     public void test_AddFundsToWallets_Exception_userId_NotFound() {
         try{
 
@@ -164,7 +186,7 @@ class WalletServiceTest {
     }
 
     @Test
-    @Order(12)
+    @Order(14)
     public void test_ShowWallet_Balance_Exception() {
         try{
             assertThrows(WalletException.class,()-> ws.showWalletBalance(12));
@@ -177,7 +199,7 @@ class WalletServiceTest {
     }
 
     @Test
-    @Order(13)
+    @Order(15)
     public void test_FundTransfer_Exception_userId_NotFound() {
         try{
             assertThrows(WalletException.class,()-> ws.fundTransfer(12,11,10.0));
@@ -190,7 +212,7 @@ class WalletServiceTest {
     }
 
     @Test
-    @Order(14)
+    @Order(16)
     public void test_FundTransfer_Exception_lowBalance() {
         try{
             assertThrows(InsufficeintAmountException.class,()-> ws.fundTransfer(123,11,1000.0));
@@ -203,7 +225,7 @@ class WalletServiceTest {
     }
 
     @Test
-    @Order(15)
+    @Order(17)
     public void test_Withdraw_Exception_lowBalance() {
         try{
             assertThrows(InsufficeintAmountException.class,()-> ws.withdraw(11,100000.0));
@@ -217,7 +239,7 @@ class WalletServiceTest {
 
 
     @Test
-    @Order(16)
+    @Order(18)
     public void test_Withdraw_Exception_userId_NotFound() {
         try{
             assertThrows(WalletException.class,()-> ws.withdraw(12,10.0));
@@ -226,11 +248,10 @@ class WalletServiceTest {
 
         }
 
-
     }
 
     @Test
-    @Order(17)
+    @Order(19)
     public void test_DeleteWallet_Exception_MisMatch_Password() {
         try{
 
@@ -241,7 +262,7 @@ class WalletServiceTest {
     }
 
     @Test
-    @Order(18)
+    @Order(20)
     public void test_DeleteWallet_Exception_MisMatch_userId() {
         try{
 
@@ -250,6 +271,8 @@ class WalletServiceTest {
             e.printStackTrace();
         }
     }
+
+
 
 
 

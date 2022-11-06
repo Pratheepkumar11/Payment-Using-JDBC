@@ -106,7 +106,7 @@ public class WalletDaoImpl implements WalletDao {
 			newUpdatedWallet = new Wallet(resultSet.getInt(1), resultSet.getString(2), resultSet.getDouble(3),resultSet.getString(4));
 
 
-		} catch (SQLException ia) {
+		} catch (  SQLException ia) {
 			throw new WalletException("Invalid account Number");
 		}
 
