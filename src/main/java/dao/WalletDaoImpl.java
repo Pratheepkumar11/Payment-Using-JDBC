@@ -37,27 +37,29 @@ public class WalletDaoImpl implements WalletDao {
 					if (newWallet.getBalance() > 0) {
 						boolean rowUpdated = pst.executeUpdate() > 0;
 						if (rowUpdated) {
-							System.out.println("Account Created Successfully");
+							//System.out.println("Account Created Successfully");
+
 						}
 					} else {
-						throw new InsufficeintAmountException(super.toString());
+						//throw new InsufficeintAmountException(super.toString());
+						throw new InsufficeintAmountException("Insufficient");
 					}
 				} else {
 
-					throw new AlreadyExistingAccountNumberException(super.toString());
+					//throw new AlreadyExistingAccountNumberException(super.toString());
+					throw new AlreadyExistingAccountNumberException("Already exists");
 				}
 			} else {
-				throw new WalletException(super.toString());
+				//throw new WalletException(super.toString());
+				throw new WalletException("Invalid account Number");
 			}
-		} catch (AlreadyExistingAccountNumberException ae) {
-			throw new AlreadyExistingAccountNumberException("Already exists");
-		} catch (WalletException | SQLException ia) {
-			throw new WalletException("Invalid account Number");
-		} catch (InsufficeintAmountException i) {
-			throw new InsufficeintAmountException("Insufficient");
-		}
 
+		} catch ( SQLException ia) {
+			//throw new WalletException("Invalid account Number");
+			ia.printStackTrace();
+		}
 		return newWallet;
+
 	}
 
 	public Wallet getWalletById(Integer walletId) throws WalletException {
@@ -74,9 +76,11 @@ public class WalletDaoImpl implements WalletDao {
 				updatedWallet = new Wallet(resultSet.getInt(1), resultSet.getString(2), resultSet.getDouble(3),resultSet.getString(4));
 
 			} else {
-				throw new WalletException(super.toString());
+				throw new SQLException();
+
 			}
-		} catch (WalletException | SQLException ia) {
+		} catch (SQLException ia) {
+
 			throw new WalletException("Invalid account Number");
 		}
 
