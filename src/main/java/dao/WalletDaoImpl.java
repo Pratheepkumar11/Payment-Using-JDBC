@@ -11,7 +11,7 @@ import exception.AlreadyExistingAccountNumberException;
 
 import exception.InsufficeintAmountException;
 import exception.WalletException;
-import exception.passwordexp;
+
 
 public class WalletDaoImpl implements WalletDao {
 
@@ -37,25 +37,25 @@ public class WalletDaoImpl implements WalletDao {
 					if (newWallet.getBalance() > 0) {
 						boolean rowUpdated = pst.executeUpdate() > 0;
 						if (rowUpdated) {
-							//System.out.println("Account Created Successfully");
+
 
 						}
 					} else {
-						//throw new InsufficeintAmountException(super.toString());
+
 						throw new InsufficeintAmountException("Insufficient");
 					}
 				} else {
 
-					//throw new AlreadyExistingAccountNumberException(super.toString());
+
 					throw new AlreadyExistingAccountNumberException("Already exists");
 				}
 			} else {
-				//throw new WalletException(super.toString());
+
 				throw new WalletException("Invalid account Number");
 			}
 
 		} catch ( SQLException ia) {
-			//throw new WalletException("Invalid account Number");
+
 			ia.printStackTrace();
 		}
 		return newWallet;
@@ -114,7 +114,7 @@ public class WalletDaoImpl implements WalletDao {
 			throw new WalletException("Invalid account Number");
 		}
 
-		//System.out.println(newUpdatedWallet);
+
 
 		return newUpdatedWallet;
 	}

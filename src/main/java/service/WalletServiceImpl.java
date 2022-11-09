@@ -22,21 +22,21 @@ public class WalletServiceImpl implements WalletService {
 		
 	}
 
-	public Boolean login(Integer walletId, String password) throws WalletException, passwordexp {
+	public Boolean login(Integer walletId, String password) throws WalletException, passwordexp, InsufficeintAmountException {
 		// TODO Auto-generated method stub
-		try {
-			boolean success = true;
+
+
+
 
 			Wallet getWallet = walletRepository.getWalletById(walletId);
 			if (Objects.equals(getWallet.getPassword(), password)) {
-				return success;
+				return true;
 			}else {
-				throw new passwordexp(super.toString());
-			}
-		}catch (passwordexp | InsufficeintAmountException ae ){
-			throw new passwordexp("password misMatch");
 
-		}
+				throw new passwordexp("password misMatch");
+			}
+
+
 
 
 	}
@@ -45,22 +45,12 @@ public class WalletServiceImpl implements WalletService {
 		// TODO Auto-generated method stub
         Double currentAmount,addAmount,finalAmount;
 		Wallet currentWallet = this.walletRepository.getWalletById(walletId);
-
-
-
-		currentAmount=currentWallet.getBalance();
+     	currentAmount=currentWallet.getBalance();
 		addAmount=currentAmount+amount;
 		currentWallet.setBalance(addAmount);
-
-		//System.out.println(currentWallet);
-		this.walletRepository.updateWallet(currentWallet);
-
+    	this.walletRepository.updateWallet(currentWallet);
 		Wallet updatedWallet = this.walletRepository.getWalletById(walletId);
 		finalAmount=updatedWallet.getBalance();
-
-
-
-
 		return finalAmount;
 	}
 
@@ -79,10 +69,9 @@ public class WalletServiceImpl implements WalletService {
 		Double senderBalance, acceptorBalance;
 		Wallet senderWallet= walletRepository.getWalletById(fromId);
 		Wallet acceptorWallet =walletRepository.getWalletById(toId);
-         senderBalance=senderWallet.getBalance();
-		if(senderBalance>=amount) {
-
-			senderBalance =- amount;
+		senderBalance=senderWallet.getBalance();
+		if(senderBalance >= amount) {
+			senderBalance = senderBalance - amount;
 			senderWallet.setBalance(senderBalance);
 			this.walletRepository.updateWallet(senderWallet);
 			acceptorBalance = amount + acceptorWallet.getBalance();
@@ -92,11 +81,6 @@ public class WalletServiceImpl implements WalletService {
 		}else {
 			throw new InsufficeintAmountException("Insufficient Balance");
 		}
-
-
-
-
-
 	}
 
 	public Wallet unRegisterWallet(Integer walletId, String password) throws WalletException, InsufficeintAmountException, passwordexp {
@@ -128,10 +112,8 @@ public class WalletServiceImpl implements WalletService {
 		if(currentBalance >=  amount) {
 			updateBalance = currentBalance - amount;
 			currentWallet.setBalance(updateBalance);
-
 			//System.out.println(currentWallet);
 			this.walletRepository.updateWallet(currentWallet);
-
 			Wallet d = this.walletRepository.getWalletById(walletId);
 			finalBalance = d.getBalance();
 			return finalBalance;
